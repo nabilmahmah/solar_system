@@ -3,16 +3,16 @@
     "revision": 0,
     "rules": [
         {
-            "primary-output": "C:\\Users\\Nabil\\Documents\\Lecture5\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.obj",
+            "primary-output": "C:\\Users\\HSyrage\\Desktop\\uni-graphic\\HW\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.obj",
             "outputs": [
-                "C:\\Users\\Nabil\\Documents\\Lecture5\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ixx.ifc.dt.module.json",
-                "C:\\Users\\Nabil\\Documents\\Lecture5\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ixx.ifc.dt.d.json",
-                "C:\\Users\\Nabil\\Documents\\Lecture5\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ifc"
+                "C:\\Users\\HSyrage\\Desktop\\uni-graphic\\HW\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ixx.ifc.dt.module.json",
+                "C:\\Users\\HSyrage\\Desktop\\uni-graphic\\HW\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ixx.ifc.dt.d.json",
+                "C:\\Users\\HSyrage\\Desktop\\uni-graphic\\HW\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ifc"
             ],
             "provides": [
                 {
                     "logical-name": "SharedModule",
-                    "source-path": "c:\\users\\nabil\\documents\\lecture5\\opengl.sharedmodule\\src\\abstraction\\sharedmodule.ixx",
+                    "source-path": "c:\\users\\hsyrage\\desktop\\uni-graphic\\hw\\solar_system\\opengl.sharedmodule\\src\\abstraction\\sharedmodule.ixx",
                     "is-interface": true
                 }
             ],

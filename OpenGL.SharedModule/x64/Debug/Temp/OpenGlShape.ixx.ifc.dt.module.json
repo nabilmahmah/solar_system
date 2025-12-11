@@ -3,16 +3,16 @@
     "revision": 0,
     "rules": [
         {
-            "primary-output": "C:\\Users\\Nabil\\Documents\\Lecture5\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.obj",
+            "primary-output": "C:\\Users\\HSyrage\\Desktop\\uni-graphic\\HW\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.obj",
             "outputs": [
-                "C:\\Users\\Nabil\\Documents\\Lecture5\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.ixx.ifc.dt.module.json",
-                "C:\\Users\\Nabil\\Documents\\Lecture5\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.ixx.ifc.dt.d.json",
-                "C:\\Users\\Nabil\\Documents\\Lecture5\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.ifc"
+                "C:\\Users\\HSyrage\\Desktop\\uni-graphic\\HW\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.ixx.ifc.dt.module.json",
+                "C:\\Users\\HSyrage\\Desktop\\uni-graphic\\HW\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.ixx.ifc.dt.d.json",
+                "C:\\Users\\HSyrage\\Desktop\\uni-graphic\\HW\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.ifc"
             ],
             "provides": [
                 {
                     "logical-name": "OpenGlShape",
-                    "source-path": "c:\\users\\nabil\\documents\\lecture5\\opengl.sharedmodule\\src\\abstraction\\openglshape.ixx",
+                    "source-path": "c:\\users\\hsyrage\\desktop\\uni-graphic\\hw\\solar_system\\opengl.sharedmodule\\src\\abstraction\\openglshape.ixx",
                     "is-interface": true
                 }
             ],

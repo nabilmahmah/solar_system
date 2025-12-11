@@ -1,4 +1,4 @@
-#include <glad/glad.h>
+﻿#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -79,19 +79,23 @@ int main()
 
 	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
-	Shader allShader("./shaders/vs/L5.vs", "./shaders/fs/L5-Multi.fs");
+	//Shader allShader("./shaders/vs/L5.vs", "./shaders/fs/L5-Multi.fs");
+	Shader allShader("./shaders/vs/L5.vs", "./shaders/fs/HW-model.fs");
+
 	Shader lightSourceShader("./shaders/vs/LightSource.vs", "./shaders/fs/LightSource.fs");
 
 	Model sun("./models/planet.glb");
 	Model moon("./models/planet.glb");
 	Model earth("./models/planet.glb");
-	Cube plainBall(vec3(0.0,0.0,0.0),0.2,vec3(1.0,0.0,0.0));
+	Cube plainBall(vec3(0.0f,0.0f,0.0f),0.2f,vec3(1.0f,1.0f,1.0f));
 	glEnable(GL_DEPTH_TEST);
 
 	stbi_set_flip_vertically_on_load(true);
 
 	vector<string> texturePaths = {};
-	texturePaths.push_back("./textures/white.jpg");
+	texturePaths.push_back("./textures/sun.jpg");
+	texturePaths.push_back("./textures/earth.png");
+	texturePaths.push_back("./textures/moon.jpg");
 	vector<GLuint> textures = loadTextures(texturePaths);
  
 	while (!glfwWindowShouldClose(window))
@@ -99,49 +103,35 @@ int main()
 
 		allShader.use();
 		allShader.setVec3("viewPos", camera.Position);
+ 
 
-		mat4 trans = mat4(1.0f);
-		float theta = (float)glfwGetTime();
-		trans = glm::rotate(trans,theta , vec3(0.0f, 1.0f, 0.0f));
-		trans = glm::translate(trans, vec3(2.0f,0.0f,0.0f));
-
-		mat4 moontranslet = trans;
-		#pragma region Light Settings
-		// Directional light
-		/*allShader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
-		allShader.setVec3("dirLight.ambient", 0.0f, 0.0f, 0.0f);
-		allShader.setVec3("dirLight.diffuse", 0.05f, 0.05f, 0.05f);
-		allShader.setVec3("dirLight.specular", 0.2f, 0.2f, 0.2f);
-		*/
+	#pragma region Light Settings
+		//
 		// sun
-		allShader.setVec3("pointLights[0].position", vec3(0,0,0));
-		allShader.setVec3("pointLights[0].ambient", vec3(1,1,1));
-		allShader.setVec3("pointLights[0].diffuse", vec3(1,1,1));
-		allShader.setVec3("pointLights[0].specular", vec3(0.1,0.1,0.1));
+		//
+		allShader.setVec3("pointLights[0].position", vec3(0.0f, 0.0f, 0.0f));
+		allShader.setVec3("pointLights[0].ambient", vec3(1.0f, 1.0f, 1.0f));
+		allShader.setVec3("pointLights[0].diffuse", vec3(1.0f, 1.0f, 1.0f));
+		allShader.setVec3("pointLights[0].specular", vec3(1.0f,1.0f,1.0f));
 		allShader.setFloat("pointLights[0].constant", 1.0f);
-		allShader.setFloat("pointLights[0].linear", 0.14f);
-		allShader.setFloat("pointLights[0].quadratic", 0.07f);
+		allShader.setFloat("pointLights[0].linear", 0.0f);
+		allShader.setFloat("pointLights[0].quadratic", 0.0f);
+		//
 		// moon
-		allShader.setVec3("pointLights[1].position", moontranslet[3]);
-		allShader.setVec3("pointLights[1].ambient", vec3(0,0,0));
-		allShader.setVec3("pointLights[1].diffuse", vec3(0.2,0.2,0.2));
-		allShader.setVec3("pointLights[1].specular", vec3(0.2, 0.2, 0.2));
+		//
+		allShader.setVec3("pointLights[1].position", vec3(0.0f, 0.0f, 0.0f));
+		allShader.setVec3("pointLights[1].ambient", vec3(0.0f, 0.0f, 0.0f));
+		allShader.setVec3("pointLights[1].diffuse", vec3(0.2f,0.2f,0.2f));
+		allShader.setVec3("pointLights[1].specular", vec3(0.2f, 0.2f, 0.2f));
 		allShader.setFloat("pointLights[1].constant", 1.0f);
 		allShader.setFloat("pointLights[1].linear", 0.14f);
 		allShader.setFloat("pointLights[1].quadratic", 0.07f);
-		// SpotLight
-		/*allShader.setVec3("spotLight.position", camera.Position);
-		allShader.setVec3("spotLight.direction", camera.Front);
-		allShader.setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
-		allShader.setVec3("spotLight.diffuse", 0,0,0);
-		allShader.setVec3("spotLight.specular", 0,0,0);
-		allShader.setFloat("spotLight.constant", 1.0f);
-		allShader.setFloat("spotLight.linear", 0.09f);
-		allShader.setFloat("spotLight.quadratic", 0.032f);
-		allShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(10.0f)));
-		allShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));*/
+		//
+	
 
 #pragma endregion
+ 
+
 
 		float currentFrame = static_cast<float>(glfwGetTime());
 		deltaTime = currentFrame - lastFrame;
@@ -149,10 +139,7 @@ int main()
 		float time = (float)glfwGetTime();
 
 		processInput(window);
-
-		//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		 //glClearColor(0.75f, 0.52f, 0.3f, 1.0f);
-		//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		mat4 projection = mat4(1.0f);
@@ -161,31 +148,102 @@ int main()
 
 		mat4 view = mat4(1.0f);
 		view = view = camera.GetViewMatrix();
-		allShader.setMat4("view", view);
-		//allShader.setVec3("lightPos", lightPos);
-		allShader.setVec3("objectColor",vec3(0.0f,1.0f,0.0f));
-		mat4 trn = mat4(1.0f);
-		trn = glm::translate(trn,vec3(2.0f, 0.0f, 0.0f));
-		trn = glm::scale(trn, vec3(0.1f, 0.1f, 0.1f));
-		allShader.setMat4("model", trn);
+		allShader.setMat4("view", view); 
+		allShader.setVec3("objectColor",vec3(1.0f,1.0f,1.0f));
+	 
+
+		mat4 sunModel = mat4(1.0f);
+	
+		
+		//sunModel = rotate(sunModel, time * 0.3f, vec3(0, 1, 0));
+		sunModel = scale(sunModel, vec3(1.0f));
+		allShader.setMat4("model", sunModel);
+		 
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textures[0]); 
+
+		allShader.setInt("diffuseTex", 0);
+
+		//allShader.setMat4("model", sunModel);
+
+		// disable moon light before draw the sun
+		allShader.setVec3("pointLights[1].ambient", vec3(0.0f));
+		allShader.setVec3("pointLights[1].diffuse", vec3(0.0f));
+		allShader.setVec3("pointLights[1].specular", vec3(0.0f));
+
+		sun.Draw(allShader);
+
+	
+		//
+		mat4 earthModel = mat4(1.0f);
+		
+		// rotate around sun
+		earthModel = rotate(earthModel, time * 0.5f, vec3(0, 1, 0));
+
+		// move it away from sun
+		earthModel = translate(earthModel, vec3(5.0f, 0.0f, 0.0f));
+
+		// rotete around it self
+		earthModel = rotate(earthModel, time * 2.0f, vec3(0, 1, 0));
+
+		// scale smaller
+		earthModel = scale(earthModel, vec3(0.4f));
+
+		allShader.setMat4("model", earthModel);
+	
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textures[1]); 
+
+		allShader.setInt("diffuseTex", 0);
+		mat4 moonModel = earthModel;
+		// rotate around earth
+		moonModel = rotate(moonModel, time * 0.5f, vec3(0, 1, 0));
+
+		// move it away from earth
+		moonModel = translate(moonModel, vec3(2.0f, 0, 0));
+
+		// rotate around it self
+		moonModel = rotate(moonModel, time * 1.0f, vec3(0, 1, 0));
+
+		// scale smaller
+		moonModel = scale(moonModel, vec3(0.2f));
+
+		//allShader.setMat4("model", earthModel);
+		
+		// enable moon light after draw the sun
+		allShader.setVec3("pointLights[0].ambient", vec3(0.0f));
+		allShader.setVec3("pointLights[1].position", moonModel[3]);
+		allShader.setVec3("pointLights[1].ambient", vec3(0.00f));
+		allShader.setVec3("pointLights[1].diffuse", vec3(0.10f));
+		allShader.setVec3("pointLights[1].specular", vec3(0.1f));
+		//
 		earth.Draw(allShader);
+
+
+		//
+
+		
+
+	
+		
+
+		allShader.setMat4("model", moonModel);
+		
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textures[2]);  
+
+		allShader.setInt("diffuseTex", 0);
+
+		//allShader.setMat4("model", moonModel);
+		moon.Draw(allShader);
+
+
+		//
 
 		lightSourceShader.use();
 		lightSourceShader.setMat4("projection", projection);
 		lightSourceShader.setMat4("view", view);
-		
-
-		// we now draw as many light bulbs as we have point lights.
-		//mat4 model = glm::mat4(1.0f);
-		//for (unsigned int i = 0; i < 1; i++)
-		//{
-		//	model = glm::mat4(1.0f);
-		//	model = glm::translate(model, pointLightPositions[i]);
-		//	model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
-		//	lightSourceShader.setMat4("model", model);
-		//	lightSourceCubes[i].transformation(model);
-		//	lightSourceCubes[i].draw(lightSourceShader);
-		//}
+ 
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
