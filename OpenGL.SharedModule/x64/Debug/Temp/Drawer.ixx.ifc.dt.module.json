@@ -3,16 +3,16 @@
     "revision": 0,
     "rules": [
         {
-            "primary-output": "C:\\Users\\HSyrage\\Desktop\\uni-graphic\\HW\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.obj",
+            "primary-output": "C:\\Users\\Nabil\\Documents\\Lecture5\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.obj",
             "outputs": [
-                "C:\\Users\\HSyrage\\Desktop\\uni-graphic\\HW\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.ixx.ifc.dt.module.json",
-                "C:\\Users\\HSyrage\\Desktop\\uni-graphic\\HW\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.ixx.ifc.dt.d.json",
-                "C:\\Users\\HSyrage\\Desktop\\uni-graphic\\HW\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.ifc"
+                "C:\\Users\\Nabil\\Documents\\Lecture5\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.ixx.ifc.dt.module.json",
+                "C:\\Users\\Nabil\\Documents\\Lecture5\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.ixx.ifc.dt.d.json",
+                "C:\\Users\\Nabil\\Documents\\Lecture5\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.ifc"
             ],
             "provides": [
                 {
                     "logical-name": "Drawer",
-                    "source-path": "c:\\users\\hsyrage\\desktop\\uni-graphic\\hw\\solar_system\\opengl.sharedmodule\\src\\abstraction\\drawer.ixx",
+                    "source-path": "c:\\users\\nabil\\documents\\lecture5\\opengl.sharedmodule\\src\\abstraction\\drawer.ixx",
                     "is-interface": true
                 }
             ],
