@@ -1,13 +1,13 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\nabil\\documents\\lecture5\\opengl.sharedmodule\\src\\abstraction\\drawer.ixx",
+        "Source": "c:\\users\\hsyrage\\desktop\\uni-graphics\\homeworkv2\\solar_system\\opengl.sharedmodule\\src\\abstraction\\drawer.ixx",
         "ProvidedModule": "Drawer",
         "Includes": [],
         "ImportedModules": [
             {
                 "Name": "OpenGlShape",
-                "BMI": "C:\\Users\\Nabil\\Documents\\Lecture5\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.ixx.ifc"
+                "BMI": "C:\\Users\\HSyrage\\Desktop\\uni-graphics\\homeworkv2\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.ixx.ifc"
             }
         ],
         "ImportedHeaderUnits": []

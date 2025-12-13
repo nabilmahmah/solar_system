@@ -1,7 +1,7 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\nabil\\documents\\lecture5\\opengl.sharedmodule\\src\\abstraction\\drawer.ixx",
+        "Source": "c:\\users\\hsyrage\\desktop\\uni-graphics\\homeworkv2\\solar_system\\opengl.sharedmodule\\src\\abstraction\\drawer.ixx",
         "ProvidedModule": "Drawer",
         "Includes": [],
         "ImportedModules": [],

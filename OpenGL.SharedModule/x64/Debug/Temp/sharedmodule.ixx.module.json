@@ -3,16 +3,16 @@
     "revision": 0,
     "rules": [
         {
-            "primary-output": "C:\\Users\\HSyrage\\Desktop\\uni-graphics\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ixx.obj",
+            "primary-output": "C:\\Users\\HSyrage\\Desktop\\uni-graphics\\homeworkv2\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ixx.obj",
             "outputs": [
-                "C:\\Users\\HSyrage\\Desktop\\uni-graphics\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\OpenGL.SharedModule.pdb",
-                "C:\\Users\\HSyrage\\Desktop\\uni-graphics\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\",
-                "C:\\Users\\HSyrage\\Desktop\\uni-graphics\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ixx.ifc"
+                "C:\\Users\\HSyrage\\Desktop\\uni-graphics\\homeworkv2\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\OpenGL.SharedModule.pdb",
+                "C:\\Users\\HSyrage\\Desktop\\uni-graphics\\homeworkv2\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\",
+                "C:\\Users\\HSyrage\\Desktop\\uni-graphics\\homeworkv2\\solar_system\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ixx.ifc"
             ],
             "provides": [
                 {
                     "logical-name": "SharedModule",
-                    "source-path": "c:\\users\\hsyrage\\desktop\\uni-graphics\\solar_system\\opengl.sharedmodule\\src\\abstraction\\sharedmodule.ixx",
+                    "source-path": "c:\\users\\hsyrage\\desktop\\uni-graphics\\homeworkv2\\solar_system\\opengl.sharedmodule\\src\\abstraction\\sharedmodule.ixx",
                     "is-interface": true
                 }
             ],
