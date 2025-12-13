@@ -1,7 +1,7 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\nabil\\documents\\lecture5\\opengl.sharedmodule\\src\\abstraction\\sharedmodule.ixx",
+        "Source": "c:\\users\\hsyrage\\desktop\\uni-graphics\\solar_system\\opengl.sharedmodule\\src\\abstraction\\sharedmodule.ixx",
         "ProvidedModule": "SharedModule",
         "Includes": [
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\stdexcept",
@@ -93,7 +93,7 @@
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\xatomic.h",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\tuple",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\xpolymorphic_allocator.h",
-            "c:\\users\\nabil\\documents\\lecture5\\opengl.sharedmodule\\dependencies\\include\\glfw\\glfw3.h",
+            "c:\\users\\hsyrage\\desktop\\uni-graphics\\solar_system\\opengl.sharedmodule\\dependencies\\include\\glfw\\glfw3.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\um\\gl\\gl.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\shared\\winapifamily.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\shared\\winpackagefamily.h",
