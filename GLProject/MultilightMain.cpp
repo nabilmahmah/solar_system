@@ -32,6 +32,15 @@ vec3 lightPos(0.0f, -1.5f, 0.0f);
 bool blinn = false;
 
 
+float baseSpeed = 1.0f;
+float timeScale = 1.0f;
+
+bool shouldAnimate = true;
+bool isMoonCoverd = false;   
+bool isEarthCoverd = false;  
+
+
+
 void processInput(GLFWwindow* window);
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -111,18 +120,24 @@ int main()
 		float currentFrame = static_cast<float>(glfwGetTime());
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
-		float time = currentFrame;
-		 
+		/*float time = currentFrame;*/
+		
+		static float simTime = 0.0f;
+
+		if (shouldAnimate)
+			simTime += deltaTime * timeScale;
+
+		float time = simTime;
+
+
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		// sun model with transforms
+		 
 		mat4 sunModel = mat4(1.0f);
 		sunModel = scale(sunModel, vec3(1.0f));
-
-		// earth model with transforms
+		 
 		mat4 earthModel = mat4(1.0f);
-		earthModel = rotate(earthModel, time * 0.2f, vec3(0, 1, 0));
+		earthModel = rotate(earthModel,  time * 0.2f, vec3(0, 1, 0));
 		earthModel = translate(earthModel, vec3(-5.0f, 0.0f, -5.0f)); 
 		earthModel = rotate(earthModel, time * 2.0f, vec3(0, 1, 0));    
 		earthModel = scale(earthModel, vec3(0.4f));                     
@@ -136,8 +151,8 @@ int main()
 		mat4 moonModel = moonOrbit;
 		moonModel = scale(moonModel, vec3(0.15f));
 
-#pragma region Light Settings
-		// Sun light
+
+#pragma region Light Settings 
 		allShader.setVec3("pointLights[0].position", vec3(0.0f, 0.0f, 0.0f));
 		allShader.setVec3("pointLights[0].ambient", vec3(0.1f));
 		allShader.setVec3("pointLights[0].diffuse", vec3(1.0f));
@@ -145,8 +160,7 @@ int main()
 		allShader.setFloat("pointLights[0].constant", 1.0f);
 		allShader.setFloat("pointLights[0].linear", 0.14f);
 		allShader.setFloat("pointLights[0].quadratic", 0.07f);
-
-		// Moon light
+		 
 		allShader.setVec3("pointLights[1].position", moonWorldPos);
 		allShader.setVec3("pointLights[1].ambient", vec3(0.0f));
 		allShader.setVec3("pointLights[1].diffuse", vec3(0.2f));
@@ -167,8 +181,92 @@ int main()
 
 		allShader.setVec3("sunPos", vec3(0.0f));        
 		allShader.setVec3("moonPos", moonWorldPos);     
+		 
 
-		// draw sun with shader
+
+		vec3 sunPos = vec3(0.0f);
+		vec3 earthPos = vec3(earthModel[3]);
+		vec3 moonPos = moonWorldPos;
+
+		float alignmentThreshold = 0.9995f;
+		float distanceThreshold = 0.3f;
+
+		vec3 sunToEarth = normalize(earthPos - sunPos);
+		vec3 sunToMoon = normalize(moonPos - sunPos);
+
+
+		if (isEarthCoverd)
+		{
+			vec3 sunToEarth = earthPos - sunPos;
+			vec3 sunToMoon = moonPos - sunPos;
+
+			vec3 dir = normalize(sunToEarth);
+
+			float alignment = dot(normalize(sunToMoon), dir);
+			float proj = dot(sunToMoon, dir);
+			vec3 closest = sunPos + proj * dir;
+			float lateralDist = length(moonPos - closest);
+
+			if (alignment > alignmentThreshold &&
+				proj > 0.0f &&
+				proj < length(sunToEarth) &&
+				lateralDist < distanceThreshold)
+			{
+				shouldAnimate = false;
+			}
+		}
+		
+
+
+		if (isMoonCoverd)
+		{
+			vec3 sunToMoon = moonPos - sunPos;
+			vec3 sunToEarth = earthPos - sunPos;
+
+			vec3 dir = normalize(sunToMoon);
+
+			float alignment = dot(normalize(sunToEarth), dir);
+
+			float proj = dot(sunToEarth, dir);
+
+			vec3 closest = sunPos + proj * dir;
+
+			float lateralDist = length(earthPos - closest);
+
+			if (alignment > alignmentThreshold &&
+				proj > 0.0f &&
+				proj < length(sunToMoon) &&
+				lateralDist < distanceThreshold)
+			{
+				shouldAnimate = false;
+			}
+		}
+		if (!shouldAnimate && isEarthCoverd)
+		{
+			allShader.setVec3("pointLights[0].ambient", vec3(0.0f));
+			allShader.setVec3("pointLights[0].diffuse", vec3(0.0f));
+			allShader.setVec3("pointLights[0].specular", vec3(0.0f));
+			
+			allShader.setVec3("pointLights[1].ambient", vec3(0.0f));
+			//allShader.setVec3("pointLights[1].diffuse", vec3(0.0f));
+			//allShader.setVec3("pointLights[1].specular", vec3(0.0f));
+
+			//lightSourceShader.setVec3("objectColor", vec3(0.0f));
+		}
+		if (!shouldAnimate && isMoonCoverd)
+		{
+
+			allShader.setVec3("pointLights[0].ambient", vec3(0.0f));
+			allShader.setVec3("pointLights[0].diffuse", vec3(0.0f));
+			allShader.setVec3("pointLights[0].specular", vec3(0.0f));
+
+			allShader.setVec3("pointLights[1].ambient", vec3(0.0f));
+			allShader.setVec3("pointLights[1].diffuse", vec3(0.0f));
+			allShader.setVec3("pointLights[1].specular", vec3(0.0f));
+
+			//lightSourceShader.setVec3("objectColor", vec3(0.0f));
+		}
+
 		lightSourceShader.use();
 		lightSourceShader.setMat4("projection", projection);
 		lightSourceShader.setMat4("view", view);
@@ -176,17 +274,20 @@ int main()
 		lightSourceShader.setVec3("objectColor", vec3(1.0f));
 		glBindTexture(GL_TEXTURE_2D, textures[0]);
 		sun.Draw(lightSourceShader);
+		 
+		
 
-		// draw earth with shader
 		allShader.use();
 		allShader.setMat4("model", earthModel);
 		glBindTexture(GL_TEXTURE_2D, textures[1]);
 		earth.Draw(allShader);
+		 
 
-		// draw moon with shader
 		allShader.setMat4("model", moonModel);
 		glBindTexture(GL_TEXTURE_2D, textures[2]);
 		moon.Draw(allShader);
+
+
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -201,6 +302,7 @@ void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		camera.ProcessKeyboard(FORWARD, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -209,17 +311,31 @@ void processInput(GLFWwindow* window)
 		camera.ProcessKeyboard(LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(RIGHT, deltaTime);
+
 	if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
 	{
+		timeScale = 5.0f;
+		shouldAnimate = true;
+		isMoonCoverd = true;
+		isEarthCoverd = false;
 	}
+
 	if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
 	{
+		timeScale = 5.0f;
+		shouldAnimate = true;
+		isEarthCoverd = true;
+		isMoonCoverd = false;
 	}
+
 	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
 	{
+		timeScale = 1.0f;
+		shouldAnimate = true;
+		isMoonCoverd = false;
+		isEarthCoverd = false;
 	}
 }
-
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 {
 	float xpos = static_cast<float>(xposIn);
