@@ -179,7 +179,7 @@ int main()
 		float time = simTime;
 
 
-		glClearColor(1.0f, 1.00f, 1.00f, 1.0f);
+		glClearColor(0.12f, 0.12f, 0.12f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		 
 		mat4 sunModel = mat4(1.0f);
