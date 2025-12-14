@@ -77,6 +77,51 @@ vector<GLuint> loadTextures(vector<string> paths, GLuint wrapOption = GL_REPEAT,
 	return textures;
 }
 
+Polygon makeMoonOrbit(
+	float r,
+	glm::vec3 color,
+	glm::vec3 center = glm::vec3(0.0f),
+	int segments = 64
+)
+{
+	std::vector<glm::vec3> v;
+
+	for (int i = 0; i < segments; i++)
+	{
+		float angle = (float)i * (2.0f * glm::pi<float>() / segments);
+		float x = center.x + cos(angle) * r;
+		float z = center.z + sin(angle) * r;
+
+		v.push_back(glm::vec3(x, center.y, z));
+	}
+
+	return Polygon(v, color);
+}
+
+Polygon makeEarthOrbit(
+	float a,                 
+	float b,                
+	glm::vec3 color,
+	glm::vec3 center = glm::vec3(0.0f),
+	int segments = 64
+)
+{
+	std::vector<glm::vec3> v;
+
+	for (int i = 0; i < segments; i++)
+	{
+		float angle = (float)i * (2.0f * glm::pi<float>() / segments);
+
+		float x = center.x + a * cos(angle);
+		float z = center.z + b * sin(angle);
+
+		v.push_back(glm::vec3(x, center.y, z));
+	}
+
+	return Polygon(v, color);
+}
+
+
 int main()
 {
 	glfwInit();
@@ -113,10 +158,14 @@ int main()
 	texturePaths.push_back("./textures/moon.jpg");
 	vector<GLuint> textures = loadTextures(texturePaths);
  
+	Polygon polygonMoonOrbit = makeMoonOrbit(0.80f, vec3(1.0f, 1.0f, 1.0f));
+	Polygon polygonEarthOrbit = makeEarthOrbit(8.0f, 5.0f, vec3(1.0f, 1.0f, 0.0f) );
+
+
 	while (!glfwWindowShouldClose(window))
 	{
 		 processInput(window);
-
+		
 		float currentFrame = static_cast<float>(glfwGetTime());
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
@@ -130,19 +179,34 @@ int main()
 		float time = simTime;
 
 
-		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+		glClearColor(1.0f, 1.00f, 1.00f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		 
 		mat4 sunModel = mat4(1.0f);
 		sunModel = scale(sunModel, vec3(1.0f));
-		 
-		mat4 earthModel = mat4(1.0f);
-		earthModel = rotate(earthModel,  time * 0.2f, vec3(0, 1, 0));
-		earthModel = translate(earthModel, vec3(-5.0f, 0.0f, -5.0f)); 
-		earthModel = rotate(earthModel, time * 2.0f, vec3(0, 1, 0));    
-		earthModel = scale(earthModel, vec3(0.4f));                     
+		// 
+		//
+		//mat4 earthModel = mat4(1.0f);
+		//earthModel = rotate(earthModel,  time * 0.2f, vec3(0, 1, 0));
+		//earthModel = translate(earthModel, vec3(-5.0f, 0.0f, -5.0f)); 
+		//earthModel = rotate(earthModel, time * 2.0f, vec3(0, 1, 0));    
+		//earthModel = scale(earthModel, vec3(0.4f));                  
+		//
+		float orbitSpeed = 0.2f;
+		float a = 8.0f;   
+		float b = 5.0f;   
 
-		
+		float angle = time * orbitSpeed;
+
+		float x = a * cos(angle);
+		float z = b * sin(angle);
+
+		mat4 earthModel = mat4(1.0f);
+		earthModel = translate(earthModel, vec3(x, 0.0f, z));
+		earthModel = rotate(earthModel, time * 2.0f, vec3(0, 1, 0));
+		earthModel = scale(earthModel, vec3(0.4f));
+
+		//
 		mat4 moonOrbit = earthModel;
 		moonOrbit = rotate(moonOrbit, time * 0.2f * 24.0f, vec3(0, 1, 0)); 
 		moonOrbit = translate(moonOrbit, vec3(2.0f, 0.0f, 0.0f));          
@@ -169,7 +233,7 @@ int main()
 		allShader.setFloat("pointLights[1].linear", 0.14f);
 		allShader.setFloat("pointLights[1].quadratic", 0.07f);
 #pragma endregion
-
+		
 		 
 		mat4 projection = perspective(radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		mat4 view = camera.GetViewMatrix();
@@ -194,6 +258,8 @@ int main()
 		vec3 sunToEarth = normalize(earthPos - sunPos);
 		vec3 sunToMoon = normalize(moonPos - sunPos);
 
+
+		polygonEarthOrbit.drawLines(allShader);
 
 		if (isEarthCoverd)
 		{
@@ -298,6 +364,13 @@ int main()
 		allShader.setMat4("model", earthModel);
 		glBindTexture(GL_TEXTURE_2D, textures[1]);
 		earth.Draw(allShader);
+
+		mat4 moonOrbitTransform = mat4(1.0f);
+		moonOrbitTransform = translate(moonOrbitTransform, vec3(earthModel[3]));
+
+		polygonMoonOrbit.transformation(moonOrbitTransform);
+		polygonMoonOrbit.drawLines(allShader);
+
 		if (!shouldAnimate && isMoonCoverd)
 		{
 
@@ -330,7 +403,9 @@ int main()
 		glBindTexture(GL_TEXTURE_2D, textures[0]);
 		sun.Draw(lightSourceShader);
 		 
+		
 
+		
 
 
 		glfwSwapBuffers(window);

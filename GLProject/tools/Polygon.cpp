@@ -40,6 +40,20 @@ void Polygon::draw(Shader& shader)
 	glBindVertexArray(this->VAO);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size());
 }
+void Polygon::drawLines(Shader& shader)
+{
+	shader.setVec3("objectColor", color);
+	shader.setMat4("model", model);
+	glBindVertexArray(this->VAO);
+	glDrawArrays(GL_LINE_LOOP, 0, vertices.size()); 
+}
+void Polygon::drawStrip(Shader& shader)
+{
+	shader.setVec3("objectColor", color);
+	shader.setMat4("model", model);
+	glBindVertexArray(this->VAO);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.size());
+}
 
 void Polygon::deleteBuffers() {
 	glDeleteVertexArrays(1, &VAO);

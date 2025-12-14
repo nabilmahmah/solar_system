@@ -11,6 +11,8 @@ public:
 	Polygon(std::vector<glm::vec3> v, glm::vec3 c);
 	void transformation(glm::mat4 t);
 	void draw(Shader& shader);
+	void drawLines(Shader& shader);
+	void drawStrip(Shader& shader);
 	void deleteBuffers();
 
 private:
@@ -30,6 +32,8 @@ public:
 	void transformation(glm::mat4 t);
 	void setTexture(GLuint& t);
 	void draw(Shader& shader);
+	void drawLines(Shader& shader);
+	void drawStrip(Shader& shader);
 	void deleteBuffers();
 
 private:
