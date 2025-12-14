@@ -89,7 +89,7 @@ int main()
 	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
 	//Shader allShader("./shaders/vs/L5.vs", ");
-	Shader allShader("./shaders/vs/L5.vs", "./shaders/fs/L5-Multi.fs");
+	Shader allShader("./shaders/vs/L5.vs", "./shaders/fs/shader.fs");
 	//Shader allShader("./shaders/vs/L5.vs", "./shaders/fs/HW-model.fs");
 
 	Shader lightSourceShader("./shaders/vs/LightSource.vs", "./shaders/fs/LightSource.fs");
@@ -151,7 +151,7 @@ int main()
 		mat4 moonModel = moonOrbit;
 		moonModel = scale(moonModel, vec3(0.15f));
 
-
+		allShader.use();
 #pragma region Light Settings 
 		allShader.setVec3("pointLights[0].position", vec3(0.0f, 0.0f, 0.0f));
 		allShader.setVec3("pointLights[0].ambient", vec3(0.1f));
@@ -179,8 +179,8 @@ int main()
 		allShader.setMat4("view", view);
 		allShader.setVec3("viewPos", camera.Position);
 
-		allShader.setVec3("sunPos", vec3(0.0f));        
-		allShader.setVec3("moonPos", moonWorldPos);     
+		//allShader.setVec3("sunPos", vec3(0.0f));        
+		//allShader.setVec3("moonPos", moonWorldPos);     
 		 
 
 
@@ -241,9 +241,10 @@ int main()
 				shouldAnimate = false;
 			}
 		}
+		allShader.use();
 		if (!shouldAnimate && isEarthCoverd)
 		{
-			allShader.setVec3("pointLights[0].ambient", vec3(0.0f));
+			//allShader.setVec3("pointLights[0].ambient", vec3(0.0f));
 			allShader.setVec3("pointLights[0].diffuse", vec3(0.0f));
 			allShader.setVec3("pointLights[0].specular", vec3(0.0f));
 			
@@ -252,20 +253,74 @@ int main()
 			//allShader.setVec3("pointLights[1].specular", vec3(0.0f));
 
 			//lightSourceShader.setVec3("objectColor", vec3(0.0f));
+			//std::cout << "earth coverd";
+
 		}
+		
+		allShader.setVec3("objectColor", vec3(1.0));
+		allShader.setMat4("model", earthModel);
+		glBindTexture(GL_TEXTURE_2D, textures[1]);
+		earth.Draw(allShader);
+		//if (!shouldAnimate && isMoonCoverd)
+		//{
+
+		//	//allShader.setVec3("pointLights[0].ambient", vec3(0.0f));
+		//	allShader.setVec3("pointLights[0].diffuse", vec3(0.0f));
+		//	allShader.setVec3("pointLights[0].specular", vec3(0.0f));
+
+		//	allShader.setVec3("pointLights[1].ambient", vec3(0.0f));
+		//	allShader.setVec3("pointLights[1].diffuse", vec3(0.0f));
+		//	allShader.setVec3("pointLights[1].specular", vec3(0.0f));
+		//	//std::cout << "moon coverd";
+		//	//lightSourceShader.setVec3("objectColor", vec3(0.0f));
+		//}
+		//allShader.setMat4("model", moonModel);
+		//glBindTexture(GL_TEXTURE_2D, textures[2]);
+		//moon.Draw(allShader);
+
+		allShader.use();
+		if (!shouldAnimate && isEarthCoverd)
+		{
+			//allShader.setVec3("pointLights[0].ambient", vec3(0.0f));
+			allShader.setVec3("pointLights[0].diffuse", vec3(0.0f));
+			allShader.setVec3("pointLights[0].specular", vec3(0.0f));
+
+			allShader.setVec3("pointLights[1].ambient", vec3(0.0f));
+			//allShader.setVec3("pointLights[1].diffuse", vec3(0.0f));
+			//allShader.setVec3("pointLights[1].specular", vec3(0.0f));
+
+			//lightSourceShader.setVec3("objectColor", vec3(0.0f));
+			//std::cout << "earth coverd";
+
+		}
+
+		allShader.setVec3("objectColor", vec3(1.0));
+		allShader.setMat4("model", earthModel);
+		glBindTexture(GL_TEXTURE_2D, textures[1]);
+		earth.Draw(allShader);
 		if (!shouldAnimate && isMoonCoverd)
 		{
 
-			allShader.setVec3("pointLights[0].ambient", vec3(0.0f));
+			//allShader.setVec3("pointLights[0].ambient", vec3(0.0f));
 			allShader.setVec3("pointLights[0].diffuse", vec3(0.0f));
 			allShader.setVec3("pointLights[0].specular", vec3(0.0f));
 
 			allShader.setVec3("pointLights[1].ambient", vec3(0.0f));
 			allShader.setVec3("pointLights[1].diffuse", vec3(0.0f));
 			allShader.setVec3("pointLights[1].specular", vec3(0.0f));
-
+			//std::cout << "moon coverd";
 			//lightSourceShader.setVec3("objectColor", vec3(0.0f));
 		}
+		else
+		{
+			allShader.setVec3("pointLights[0].diffuse", vec3(1.0f));
+			allShader.setVec3("pointLights[0].specular", vec3(1.0f));
+			allShader.setVec3("pointLights[1].ambient", vec3(0.0f));
+		}
+		allShader.setMat4("model", moonModel);
+		glBindTexture(GL_TEXTURE_2D, textures[2]);
+		moon.Draw(allShader);
+
 
 		lightSourceShader.use();
 		lightSourceShader.setMat4("projection", projection);
@@ -275,17 +330,6 @@ int main()
 		glBindTexture(GL_TEXTURE_2D, textures[0]);
 		sun.Draw(lightSourceShader);
 		 
-		
-
-		allShader.use();
-		allShader.setMat4("model", earthModel);
-		glBindTexture(GL_TEXTURE_2D, textures[1]);
-		earth.Draw(allShader);
-		 
-
-		allShader.setMat4("model", moonModel);
-		glBindTexture(GL_TEXTURE_2D, textures[2]);
-		moon.Draw(allShader);
 
 
 
