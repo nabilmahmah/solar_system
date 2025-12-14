@@ -24,15 +24,6 @@
     <ClCompile Include="..\OpenGL.SharedModule\src\glad.c">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="ModelsMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MultilightMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PrimitivesMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="tools\Cube.cpp">
       <Filter>Source Files\tools</Filter>
     </ClCompile>

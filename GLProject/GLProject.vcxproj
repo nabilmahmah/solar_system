@@ -129,9 +129,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\OpenGL.SharedModule\src\glad.c" />
-    <ClCompile Include="ModelsMain.cpp" />
-    <ClCompile Include="MultilightMain.cpp" />
-    <ClCompile Include="PrimitivesMain.cpp" />
     <ClCompile Include="solarMain.cpp" />
     <ClCompile Include="tools\Cube.cpp" />
     <ClCompile Include="tools\Polygon.cpp" />
